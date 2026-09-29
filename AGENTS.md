@@ -3,10 +3,10 @@
 ## Project memory
 
 - Working folder: `C:/MAMP/htdocs/dawn`.
-- Shopify Dawn theme; `config/settings_schema.json` declares version `9.0.0` as inspected on 2026-09-29. This is the local baseline, not a claim that it is the latest Dawn release.
+- Shopify Dawn theme; `config/settings_schema.json` declares version `16.0.0` as inspected on 2026-09-29 (the repository was upgraded from the earlier 9.0.0 local baseline). The `9.0.0-release-branch` branch keeps the old theme and shares no git history with `main`.
 - The user wants ongoing theme edits using official Shopify skills and current Shopify documentation. Read this file at the start of future work and update the map when structure changes.
 - This is a Shopify Liquid theme, not a PHP application despite its MAMP location. Storefront rendering requires Shopify.
-- Preserve existing customizations, particularly `snippets/shoplift.liquid` rendered by `layout/theme.liquid`. Inspect files before editing; do not replace the theme wholesale as part of routine changes.
+- Preserve existing customizations. The mandala art theme layer (see below) is the main customization in this tree; `snippets/shoplift.liquid` existed only in the old 9.0.0 local checkout and is not present here. Inspect files before editing; do not replace the theme wholesale as part of routine changes.
 
 ## Official skills
 
@@ -38,7 +38,7 @@ At setup, the skill root was `C:/Users/Harman/.codex/plugins/cache/openai-curate
 | Search | `templates/search.json`, `sections/main-search.liquid`, `sections/predictive-search.liquid`, `assets/main-search.js`, `assets/predictive-search.js` |
 | Standard pages and contact | `templates/page.json`, `templates/page.contact.json`, `sections/main-page.liquid`, `sections/contact-form.liquid` |
 | Blogs and articles | `templates/blog.json`, `templates/article.json`, `sections/main-blog.liquid`, `sections/main-article.liquid` |
-| Legacy customer account templates | `templates/customers/`, corresponding `sections/main-*.liquid`, `assets/customer.js`, `assets/customer.css` |
+| Customer accounts | Handled by Shopify customer accounts; there is no `templates/customers/` directory in this tree |
 | Global setting definitions | `config/settings_schema.json` |
 | Saved merchant settings | `config/settings_data.json`; preserve merchant values |
 | Storefront translations | `locales/en.default.json` and other language JSON files |
@@ -46,7 +46,21 @@ At setup, the skill root was `C:/Users/Harman/.codex/plugins/cache/openai-curate
 | Theme validation configuration | `.theme-check.yml` |
 | Contribution conventions | `.github/CONTRIBUTING.md` |
 
-There is currently no root `blocks/` directory. Existing sections define their own blocks. Check compatibility before introducing reusable theme blocks; do not assume modern Dawn structure exists in this older checkout.
+There is currently no root `blocks/` directory. Existing sections define their own blocks. Check compatibility before introducing reusable theme blocks.
+
+## Mandala art theme layer
+
+The store is a mandala art brand. The redesign plan and status live in `docs/MANDALA_THEME_PLAN.md`.
+
+| Piece | Files |
+| --- | --- |
+| Brand overrides (colors, type, cards, header, product page helpers) | `assets/mandala-theme.css` (loaded after `base.css` in `layout/theme.liquid`), `assets/mandala-watermark.svg`, `--color-gold` in `layout/theme.liquid` |
+| New sections | `sections/trust-bar.liquid`, `sections/testimonials.liquid`, `sections/instagram-gallery.liquid` with matching `assets/section-*.css` |
+| Ornament divider | `snippets/ornament-divider.liquid`, `assets/component-ornament.css` |
+| Sticky add-to-cart bar | `snippets/sticky-atc.liquid`, `assets/sticky-atc.js`, `assets/sticky-atc.css`, rendered at the end of `sections/main-product.liquid` |
+| Extended stock sections | `image-banner` (eyebrow block, ornament, gradient overlay, watermark), `image-with-text` (gold frame, signature caption), `collection-list` (circle ratio), `multicolumn` (icon select), `newsletter` (privacy line, watermark) |
+| Product card and price extras | `snippets/card-product.liquid` (Original / Limited tag badges), `snippets/price.liquid` (savings percentage) |
+| Home, product and collection composition | `templates/index.json`, `templates/product.json`, `templates/collection.json`, `sections/header-group.json`, `sections/footer-group.json` |
 
 ## Current documentation workflow
 

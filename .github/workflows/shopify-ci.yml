@@ -27,8 +27,11 @@ jobs:
   lighthouse-ci:
     name: Performance Audit (Lighthouse)
     runs-on: ubuntu-latest
-    # Wait for theme-check to pass first to save action runner minutes
-    needs: theme-check 
+    # Wait for theme-check to pass first to save action runner minutes.
+    # Push-only: fork pull requests do not receive the store secrets, so the
+    # job would fail with empty inputs. Theme Check still runs on every PR.
+    needs: theme-check
+    if: github.event_name == 'push'
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
