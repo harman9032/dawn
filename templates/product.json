@@ -3,24 +3,38 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": {
-          "type": "text",
+        "eyebrow": {
+          "type": "custom_liquid",
           "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
+            "custom_liquid": "<p class=\"product__eyebrow caption-with-letter-spacing\">{{ product.collections.first.title | default: 'Mandala art' }}</p>"
           }
         },
         "title": {
           "type": "title"
         },
+        "rating": {
+          "type": "rating"
+        },
         "price": {
           "type": "price"
+        },
+        "benefits": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"product__benefits\"><ul><li>Hand-drawn original artwork, signed by the artist</li><li>Museum-grade archival paper and inks</li><li>Ships safely packed within 2–3 business days</li></ul></div>"
+          }
         },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
             "picker_type": "button",
             "swatch_shape": "circle"
+          }
+        },
+        "size_guide": {
+          "type": "popup",
+          "settings": {
+            "text": "Size guide"
           }
         },
         "quantity_selector": {
@@ -33,8 +47,79 @@
             "show_gift_card_recipient": true
           }
         },
+        "inventory": {
+          "type": "inventory",
+          "settings": {
+            "text_style": "body",
+            "inventory_threshold": 5,
+            "show_inventory_quantity": true
+          }
+        },
+        "trust_icons": {
+          "type": "icon-with-text",
+          "settings": {
+            "layout": "horizontal",
+            "icon_1": "lock",
+            "heading_1": "Secure checkout",
+            "icon_2": "truck",
+            "heading_2": "Free shipping over $75",
+            "icon_3": "return",
+            "heading_3": "30-day returns"
+          }
+        },
         "description": {
           "type": "description"
+        },
+        "tab_materials": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Size & materials",
+            "icon": "ruler",
+            "content": "<p>Available sizes are listed in the size picker. Drawn with archival pigment ink on 300gsm acid-free cotton paper. Each original is signed and dated on the back.</p>"
+          }
+        },
+        "tab_framing": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Framing options",
+            "icon": "box",
+            "content": "<p>Pieces ship unframed by default so you can choose a frame that suits your space. Standard sizes fit off-the-shelf frames. Framed options are available on selected pieces.</p>"
+          }
+        },
+        "tab_shipping": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Shipping & returns",
+            "icon": "truck",
+            "content": "<p>Orders ship within 2–3 business days in rigid, moisture-safe packaging. Free shipping on orders over $75. Not in love? Return within 30 days for a full refund.</p>"
+          }
+        },
+        "tab_care": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Care instructions",
+            "icon": "leaf",
+            "content": "<p>Keep out of direct sunlight and away from humidity. Frame behind glass or acrylic to protect the surface. Dust gently with a soft dry cloth.</p>"
+          }
+        },
+        "complementary": {
+          "type": "complementary",
+          "settings": {
+            "block_heading": "Pairs well with",
+            "make_collapsible_row": false,
+            "icon": "price_tag",
+            "product_list_limit": 4,
+            "products_per_page": 2,
+            "pagination_style": "counter",
+            "image_ratio": "square",
+            "enable_quick_add": true
+          }
+        },
+        "commission": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% if product.tags contains 'commission' or product.tags contains 'original' %}<div class=\"product__commission\">Want this in another size or palette? <a href=\"/pages/custom-commissions\">Request a custom piece</a> and we will draw it for you.</div>{% endif %}"
+          }
         },
         "share": {
           "type": "share",
@@ -44,39 +129,195 @@
         }
       },
       "block_order": [
-        "vendor",
+        "eyebrow",
         "title",
+        "rating",
         "price",
+        "benefits",
         "variant_picker",
+        "size_guide",
         "quantity_selector",
         "buy_buttons",
+        "inventory",
+        "trust_icons",
         "description",
+        "tab_materials",
+        "tab_framing",
+        "tab_shipping",
+        "tab_care",
+        "complementary",
+        "commission",
         "share"
       ],
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
         "media_position": "left",
-        "gallery_layout": "stacked",
+        "gallery_layout": "thumbnail_slider",
         "media_size": "large",
         "constrain_to_viewport": true,
         "media_fit": "contain",
-        "image_zoom": "lightbox",
-        "mobile_thumbnails": "hide",
+        "image_zoom": "hover",
+        "mobile_thumbnails": "show",
         "hide_variants": true,
         "enable_video_looping": false,
         "padding_top": 36,
         "padding_bottom": 12
       }
     },
-    "disclosures": {
-      "type": "disclosures",
+    "trust_bar": {
+      "type": "trust-bar",
+      "blocks": {
+        "t1": {
+          "type": "item",
+          "settings": {
+            "icon": "handmade",
+            "heading": "Hand-drawn originals",
+            "text": "Every piece drawn by hand"
+          }
+        },
+        "t2": {
+          "type": "item",
+          "settings": {
+            "icon": "shipping",
+            "heading": "Free shipping",
+            "text": "On orders over $75"
+          }
+        },
+        "t3": {
+          "type": "item",
+          "settings": {
+            "icon": "secure",
+            "heading": "Secure checkout",
+            "text": "SSL encrypted payments"
+          }
+        },
+        "t4": {
+          "type": "item",
+          "settings": {
+            "icon": "returns",
+            "heading": "30-day returns",
+            "text": "Easy, no-questions returns"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
       "settings": {
-        "padding_top": 36,
-        "padding_bottom": 0
+        "columns_desktop": 4,
+        "icon_size": "small",
+        "show_dividers": true,
+        "color_scheme": "scheme-2",
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     },
-    "related-products": {
+    "how_its_made": {
+      "type": "image-with-text",
+      "blocks": {
+        "caption": {
+          "type": "caption",
+          "settings": {
+            "caption": "How it's made",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Every line drawn by hand",
+            "heading_size": "h1"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Each mandala begins with a single centre point and grows outward, ring by ring, over many hours of quiet, focused work. No two are ever the same.</p>",
+            "text_style": "body"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_label": "Meet the artist",
+            "button_link": "shopify://pages/about",
+            "button_style_secondary": true
+          }
+        }
+      },
+      "block_order": [
+        "caption",
+        "heading",
+        "text",
+        "button"
+      ],
+      "settings": {
+        "height": "medium",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "section_color_scheme": "scheme-1",
+        "color_scheme": "scheme-1",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "show_frame": true,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "r1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>The detail is unreal. I framed it the day it arrived and it is the first thing everyone asks about.</p>",
+            "author": "Priya S.",
+            "detail": "Bought: Lotus Bloom, 24×24"
+          }
+        },
+        "r2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>Arrived beautifully packed, colours even richer in person. Bought a second one as a gift.</p>",
+            "author": "Daniel R.",
+            "detail": "Bought: Sunrise Mandala print"
+          }
+        },
+        "r3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>Calming to look at every morning. You can tell it was drawn by hand.</p>",
+            "author": "Mei L.",
+            "detail": "Bought: Indigo Ring original"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "heading": "What collectors say",
+        "heading_size": "h1",
+        "color_scheme": "scheme-5",
+        "swipe_on_mobile": true,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "related_products": {
       "type": "related-products",
       "settings": {
         "heading": "You may also like",
@@ -88,16 +329,84 @@
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
-        "show_rating": false,
+        "show_rating": true,
         "columns_mobile": "2",
         "padding_top": 36,
         "padding_bottom": 28
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "f1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How long does shipping take?",
+            "icon": "truck",
+            "row_content": "<p>Orders ship within 2–3 business days. Domestic delivery usually takes 3–5 days; international 7–14 days.</p>"
+          }
+        },
+        "f2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Does it come framed?",
+            "icon": "box",
+            "row_content": "<p>Pieces ship unframed unless a framed option is selected. All standard sizes fit common off-the-shelf frames.</p>"
+          }
+        },
+        "f3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How are digital downloads delivered?",
+            "icon": "lightning_bolt",
+            "row_content": "<p>A download link is emailed to you immediately after checkout and is also available in your order confirmation.</p>"
+          }
+        },
+        "f4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What if it arrives damaged?",
+            "icon": "return",
+            "row_content": "<p>Email us a photo within 7 days and we will replace it free of charge.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "settings": {
+        "caption": "",
+        "heading": "Questions, answered",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "scheme-2",
+        "color_scheme": "scheme-2",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "disclosures": {
+      "type": "disclosures",
+      "settings": {
+        "padding_top": 24,
+        "padding_bottom": 0
       }
     }
   },
   "order": [
     "main",
-    "disclosures",
-    "related-products"
+    "trust_bar",
+    "how_its_made",
+    "testimonials",
+    "related_products",
+    "faq",
+    "disclosures"
   ]
 }

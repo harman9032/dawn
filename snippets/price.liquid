@@ -107,6 +107,12 @@
         <span class="price-item price-item--sale price-item--last">
           {{ money_price }}
         </span>
+        {%- if compare_at_price > price and product.price_varies == false -%}
+          {%- assign savings_percent = compare_at_price | minus: price | times: 100 | divided_by: compare_at_price -%}
+          {%- if savings_percent > 0 -%}
+            <span class="price__savings">{{ 'products.product.save_percent' | t: percent: savings_percent }}</span>
+          {%- endif -%}
+        {%- endif -%}
       </div>
       {%- if product.selected_or_first_available_variant.unit_price_measurement -%}
         {% render 'unit-price', price: product.selected_or_first_available_variant.unit_price, measurement: product.selected_or_first_available_variant.unit_price_measurement %}

@@ -1,0 +1,127 @@
+{% comment %}
+  Renders a sticky add-to-cart bar that slides in from the bottom of the viewport
+  once the main product buy button (#ProductSubmitButton-{section_id}) has scrolled
+  out of view. Contains the product thumbnail, title, price and a single ATC button
+  (no dynamic checkout). Variant id / price / availability stay in sync through
+  PUB_SUB_EVENTS.variantChange (see assets/sticky-atc.js).
+
+  Accepts:
+  - product: {Object} product object.
+  - section_id: {String} id of the main-product section this bar belongs to.
+
+  Usage:
+  {% render 'sticky-atc', product: product, section_id: section.id %}
+{% endcomment %}
+
+{{ 'sticky-atc.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sticky-atc.js' | asset_url }}" defer="defer"></script>
+
+{%- if product != blank -%}
+  {%- liquid
+    assign variant = product.selected_or_first_available_variant
+    assign sticky_form_id = 'sticky-product-form-' | append: section_id
+
+    assign check_against_inventory = true
+    if variant.inventory_management != 'shopify' or variant.inventory_policy == 'continue'
+      assign check_against_inventory = false
+    endif
+
+    assign quantity_rule_soldout = false
+    if variant.quantity_rule.min > variant.inventory_quantity and check_against_inventory
+      assign quantity_rule_soldout = true
+    endif
+
+    assign variant_unavailable = false
+    if variant == null or variant.available == false or quantity_rule_soldout
+      assign variant_unavailable = true
+    endif
+  -%}
+
+  <sticky-add-to-cart
+    class="sticky-atc"
+    data-target="ProductSubmitButton-{{ section_id }}"
+    data-section="{{ section_id }}"
+    data-add-to-cart="{{ 'products.product.add_to_cart' | t | escape }}"
+    data-sold-out="{{ 'products.product.sold_out' | t | escape }}"
+    data-unavailable="{{ 'products.product.unavailable' | t | escape }}"
+    hidden
+  >
+    <div class="sticky-atc__inner page-width">
+      {%- if product.featured_media -%}
+        <div class="sticky-atc__media">
+          {{
+            product.featured_media
+            | image_url: width: 120
+            | image_tag:
+              loading: 'lazy',
+              width: 56,
+              height: 56,
+              class: 'sticky-atc__image',
+              alt: product.featured_media.alt
+          }}
+        </div>
+      {%- endif -%}
+
+      <div class="sticky-atc__details">
+        <h3 class="sticky-atc__title">{{ product.title | escape }}</h3>
+        <span class="sticky-atc__price">
+          {%- render 'price', product: product, use_variant: true -%}
+        </span>
+      </div>
+
+      <product-form
+        class="product-form sticky-atc__form"
+        data-hide-errors="false"
+        data-section-id="{{ section_id }}"
+      >
+        <div class="product-form__error-message-wrapper" role="alert" hidden>
+          <span class="svg-wrapper">
+            {{- 'icon-error.svg' | inline_asset_content -}}
+          </span>
+          <span class="product-form__error-message"></span>
+        </div>
+
+        {%- form 'product',
+          product,
+          id: sticky_form_id,
+          class: 'form',
+          novalidate: 'novalidate',
+          data-type: 'add-to-cart-form'
+        -%}
+          <input
+            type="hidden"
+            name="id"
+            value="{{ variant.id }}"
+            {% if variant_unavailable %}
+              disabled
+            {% endif %}
+            class="product-variant-id"
+          >
+          <input type="hidden" name="quantity" value="1">
+
+          <div class="product-form__buttons sticky-atc__buttons">
+            <button
+              type="submit"
+              name="add"
+              class="product-form__submit button button--full-width button--primary sticky-atc__button"
+              {% if variant_unavailable %}
+                disabled
+              {% endif %}
+            >
+              <span>
+                {%- if variant == null -%}
+                  {{ 'products.product.unavailable' | t }}
+                {%- elsif variant.available == false or quantity_rule_soldout -%}
+                  {{ 'products.product.sold_out' | t }}
+                {%- else -%}
+                  {{ 'products.product.add_to_cart' | t }}
+                {%- endif -%}
+              </span>
+              {%- render 'loading-spinner' -%}
+            </button>
+          </div>
+        {%- endform -%}
+      </product-form>
+    </div>
+  </sticky-add-to-cart>
+{%- endif -%}

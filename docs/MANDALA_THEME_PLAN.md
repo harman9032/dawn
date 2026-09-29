@@ -238,3 +238,16 @@ policy figures, collection names.
   when the two are reconciled.
 - Every push to `main` runs Theme Check; each phase should land only when Theme
   Check is clean locally (`shopify theme check`).
+
+## 12. Implementation status (2026-09-29)
+
+All six phases are implemented on `main`:
+
+- Phase 1: `config/settings_data.json` (schemes, Cormorant Garamond / Jost, shape settings, cart drawer), `layout/theme.liquid` (`--color-gold`, loads `assets/mandala-theme.css`), `assets/mandala-watermark.svg`.
+- Phase 2: new `sections/trust-bar.liquid`, `sections/testimonials.liquid`, `sections/instagram-gallery.liquid`, `snippets/ornament-divider.liquid`; edits to `image-banner` (eyebrow block, ornament, gradient overlay, watermark), `image-with-text` (gold frame, signature caption), `collection-list` (circle ratio), `multicolumn` (icon select), `newsletter` (privacy line, watermark), `snippets/card-product.liquid` (Original / Limited tag badges), `snippets/price.liquid` (Save X%).
+- Phase 3: `templates/index.json`, `sections/header-group.json`, `sections/footer-group.json` rebuilt in the conversion order from section 5.
+- Phase 4: `templates/product.json` block order from section 7, `snippets/sticky-atc.liquid` + `assets/sticky-atc.js` + `assets/sticky-atc.css` rendered from `sections/main-product.liquid`.
+- Phase 5: `templates/collection.json` (square images, ratings, quick add, filters), cart drawer upsell via `cart_drawer_collection`.
+- Phase 6: Theme Check passes with no offenses in changed or new files (the remaining warnings are upstream Dawn ones).
+
+Store owner to-do before launch: upload logo, hero image, artist portrait, process video URL, Instagram images; create collections with handles `bestsellers`, `new-arrivals`, `wall-art`, `prints`, `canvas`, `digital-downloads`, `custom-commissions`, `stickers-cards`; create pages `about`, `custom-commissions` and a size-guide page (pick it in the product page's "Size guide" block); tag one-of-a-kind products `original` and short runs `limited`; install a reviews app that writes `reviews.rating` metafields so stars render.

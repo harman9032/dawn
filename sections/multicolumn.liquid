@@ -118,6 +118,14 @@
                   </div>
                 </div>
               {%- endif -%}
+              {%- if block.settings.image == blank and block.settings.icon != 'none' and block.settings.icon != blank -%}
+                <div class="multicolumn-card__icon">
+                  <span class="svg-wrapper">
+                    {%- assign icon_file = 'icon-' | append: block.settings.icon | append: '.svg' -%}
+                    {{- icon_file | inline_asset_content -}}
+                  </span>
+                </div>
+              {%- endif -%}
               <div class="multicolumn-card__info">
                 {%- if block.settings.title != blank -%}
                   <h3 class="inline-richtext">{{ block.settings.title }}</h3>
@@ -408,6 +416,27 @@
           "type": "image_picker",
           "id": "image",
           "label": "t:sections.multicolumn.blocks.column.settings.image.label"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "options": [
+            { "value": "none", "label": "t:sections.multicolumn.blocks.column.settings.icon.options__1.label" },
+            { "value": "heart", "label": "t:sections.multicolumn.blocks.column.settings.icon.options__2.label" },
+            { "value": "truck", "label": "t:sections.multicolumn.blocks.column.settings.icon.options__3.label" },
+            { "value": "lock", "label": "t:sections.multicolumn.blocks.column.settings.icon.options__4.label" },
+            { "value": "return", "label": "t:sections.multicolumn.blocks.column.settings.icon.options__5.label" },
+            { "value": "star", "label": "t:sections.multicolumn.blocks.column.settings.icon.options__6.label" },
+            { "value": "leaf", "label": "t:sections.multicolumn.blocks.column.settings.icon.options__7.label" },
+            { "value": "box", "label": "t:sections.multicolumn.blocks.column.settings.icon.options__8.label" },
+            { "value": "stopwatch", "label": "t:sections.multicolumn.blocks.column.settings.icon.options__9.label" },
+            { "value": "ruler", "label": "t:sections.multicolumn.blocks.column.settings.icon.options__10.label" },
+            { "value": "plant", "label": "t:sections.multicolumn.blocks.column.settings.icon.options__11.label" },
+            { "value": "price-tag", "label": "t:sections.multicolumn.blocks.column.settings.icon.options__12.label" }
+          ],
+          "default": "none",
+          "label": "t:sections.multicolumn.blocks.column.settings.icon.label",
+          "info": "t:sections.multicolumn.blocks.column.settings.icon.info"
         },
         {
           "type": "inline_richtext",

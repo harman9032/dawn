@@ -1,0 +1,117 @@
+.trust-bar__list {
+  --trust-bar-icon-size: 2.4rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--grid-mobile-horizontal-spacing);
+  row-gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trust-bar__list--icon-medium {
+  --trust-bar-icon-size: 3.2rem;
+}
+
+.trust-bar__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  text-align: center;
+  padding: 0 0.5rem;
+}
+
+.trust-bar__icon {
+  flex-shrink: 0;
+  width: var(--trust-bar-icon-size);
+  height: var(--trust-bar-icon-size);
+  color: rgb(var(--color-gold));
+}
+
+.trust-bar__icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  color: currentColor;
+}
+
+.trust-bar__content {
+  min-width: 0;
+}
+
+.trust-bar__heading {
+  margin: 0;
+  line-height: calc(1 + 0.3 / max(1, var(--font-heading-scale)));
+}
+
+.trust-bar__text {
+  margin: 0.3rem 0 0;
+  font-size: 1.2rem;
+  line-height: calc(1 + 0.5 / var(--font-body-scale));
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+@media screen and (min-width: 750px) {
+  .trust-bar__list {
+    column-gap: var(--grid-desktop-horizontal-spacing);
+    row-gap: 2.4rem;
+  }
+
+  .trust-bar__list--2-col-desktop {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .trust-bar__list--3-col-desktop {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .trust-bar__list--4-col-desktop {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .trust-bar__list--5-col-desktop,
+  .trust-bar__list--6-col-desktop {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .trust-bar__text {
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .trust-bar__list--5-col-desktop {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .trust-bar__list--6-col-desktop {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .trust-bar__item {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.2rem;
+    text-align: left;
+    padding: 0 1rem;
+  }
+
+  .trust-bar__list--5-col-desktop .trust-bar__item,
+  .trust-bar__list--6-col-desktop .trust-bar__item {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.8rem;
+  }
+
+  .trust-bar__list--dividers .trust-bar__item + .trust-bar__item::before {
+    content: '';
+    position: absolute;
+    top: 0.2rem;
+    bottom: 0.2rem;
+    left: calc(-0.5 * var(--grid-desktop-horizontal-spacing));
+    width: 0.1rem;
+    background: rgba(var(--color-foreground), 0.15);
+  }
+}

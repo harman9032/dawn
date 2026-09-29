@@ -1,0 +1,254 @@
+{{ 'section-trust-bar.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="trust-bar color-{{ section.settings.color_scheme }} gradient">
+  <div
+    class="page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+    {% if settings.animations_reveal_on_scroll %}
+      data-cascade
+    {% endif %}
+  >
+    <ul
+      class="trust-bar__list trust-bar__list--{{ section.settings.columns_desktop }}-col-desktop trust-bar__list--icon-{{ section.settings.icon_size }}{% if section.settings.show_dividers %} trust-bar__list--dividers{% endif %}"
+      role="list"
+    >
+      {%- for block in section.blocks -%}
+        {%- liquid
+          case block.settings.icon
+            when 'handmade'
+              assign icon_file = 'icon-heart.svg'
+            when 'shipping'
+              assign icon_file = 'icon-truck.svg'
+            when 'secure'
+              assign icon_file = 'icon-lock.svg'
+            when 'returns'
+              assign icon_file = 'icon-return.svg'
+            when 'star'
+              assign icon_file = 'icon-star.svg'
+            when 'leaf'
+              assign icon_file = 'icon-leaf.svg'
+            when 'box'
+              assign icon_file = 'icon-box.svg'
+            when 'stopwatch'
+              assign icon_file = 'icon-stopwatch.svg'
+            else
+              assign icon_file = ''
+          endcase
+        -%}
+        <li
+          class="trust-bar__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {{ block.shopify_attributes }}
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+            style="--animation-order: {{ forloop.index }};"
+          {% endif %}
+        >
+          {%- if icon_file != blank -%}
+            <span class="trust-bar__icon svg-wrapper" aria-hidden="true">
+              {{- icon_file | inline_asset_content -}}
+            </span>
+          {%- endif -%}
+          <div class="trust-bar__content">
+            {%- if block.settings.heading != blank -%}
+              <h3 class="trust-bar__heading h5">{{ block.settings.heading | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="trust-bar__text">{{ block.settings.text | escape }}</p>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Trust bar",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "label": "Number of columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "icon_size",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        }
+      ],
+      "default": "small",
+      "label": "Icon size"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dividers",
+      "default": true,
+      "label": "Show dividers between items on desktop"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "handmade",
+              "label": "Handmade (heart)"
+            },
+            {
+              "value": "shipping",
+              "label": "Shipping (truck)"
+            },
+            {
+              "value": "secure",
+              "label": "Secure (lock)"
+            },
+            {
+              "value": "returns",
+              "label": "Returns (arrow)"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "box",
+              "label": "Box"
+            },
+            {
+              "value": "stopwatch",
+              "label": "Stopwatch"
+            }
+          ],
+          "default": "handmade",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Hand-drawn originals",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "info": "Optional short line under the heading."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust bar",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon": "handmade",
+            "heading": "Hand-drawn originals",
+            "text": "Every piece drawn by hand"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "shipping",
+            "heading": "Free shipping",
+            "text": "On orders over $75"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "secure",
+            "heading": "Secure checkout",
+            "text": "SSL encrypted payments"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "returns",
+            "heading": "30-day returns",
+            "text": "Easy, no-questions returns"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

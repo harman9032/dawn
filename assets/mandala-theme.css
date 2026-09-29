@@ -1,0 +1,365 @@
+/* Mandala art theme layer: loaded after base.css, overrides only. */
+
+/* Typography */
+h1,
+h2,
+h3,
+.h0,
+.h1,
+.h2,
+.h3,
+.hxl,
+.hxxl {
+  letter-spacing: 0.02em;
+}
+
+.h0 {
+  font-size: calc(var(--font-heading-scale) * 3.4rem);
+}
+
+@media screen and (min-width: 750px) {
+  .h0 {
+    font-size: calc(var(--font-heading-scale) * 5.2rem);
+  }
+}
+
+.button,
+.shopify-challenge__button,
+.customer button,
+button.shopify-payment-button__button--unbranded,
+.quick-add__submit {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.price {
+  font-weight: 500;
+}
+
+.price--on-sale .price-item--regular {
+  opacity: 0.6;
+}
+
+.price--on-sale .price-item--sale,
+.price__savings {
+  color: rgb(var(--color-button));
+}
+
+.price__savings {
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-left: 0.6rem;
+}
+
+/* Eyebrow / caption in gold */
+.eyebrow,
+.caption-with-letter-spacing.eyebrow {
+  color: rgb(var(--color-gold));
+  font-weight: 500;
+}
+
+/* Section titles get a gold hairline underneath */
+.title-wrapper-with-link .title,
+.collection__title .title,
+.multicolumn__title .title,
+.collection-list-title,
+.rich-text__heading {
+  position: relative;
+}
+
+/* Product cards: mat-board padding, gold hairline on hover */
+.card--card,
+.card--standard .card__inner {
+  transition: border-color var(--duration-default) ease, box-shadow var(--duration-default) ease;
+}
+
+.card-wrapper:hover .card--card,
+.card-wrapper:hover .card--standard .card__inner {
+  box-shadow: 0 0 0 1px rgba(var(--color-gold), 0.6), 0 10px 24px rgba(var(--color-shadow), 0.08);
+}
+
+.card__heading {
+  font-family: var(--font-heading-family);
+  font-size: calc(var(--font-heading-scale) * 1.7rem);
+}
+
+.card__badge .badge,
+.price__badge-sale,
+.price__badge-sold-out {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+}
+
+.badge--tag {
+  background-color: rgb(var(--color-gold));
+  border-color: rgb(var(--color-gold));
+  color: #2b2340;
+}
+
+/* Star ratings in gold */
+.rating-star {
+  --color-rating-star: rgb(var(--color-gold));
+}
+
+/* Header: uppercase nav with gold underline */
+.header__menu-item {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 1.3rem;
+}
+
+.header__menu-item span {
+  background-image: linear-gradient(rgb(var(--color-gold)), rgb(var(--color-gold)));
+  background-size: 0 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--duration-default) ease;
+}
+
+.header__menu-item:hover span,
+.header__menu-item[aria-current='page'] span {
+  background-size: 100% 1px;
+  text-decoration: none;
+}
+
+.header__icon .cart-count-bubble {
+  background-color: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+}
+
+.utility-bar--bottom-border {
+  border-bottom: 1px solid rgba(var(--color-gold), 0.5);
+}
+
+/* Announcement bar */
+.announcement-bar__message {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+}
+
+/* Mandala watermark helper: sections opt in with .has-mandala-watermark */
+.has-mandala-watermark {
+  position: relative;
+  overflow: hidden;
+}
+
+.has-mandala-watermark::before {
+  content: '';
+  position: absolute;
+  top: -12%;
+  right: -8%;
+  width: 46vmin;
+  height: 46vmin;
+  background-image: url('mandala-watermark.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.has-mandala-watermark > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Collapsible rows: gold icons, thinner */
+.accordion summary .svg-wrapper,
+.accordion summary .icon-caret {
+  color: rgb(var(--color-gold));
+}
+
+.accordion + .accordion {
+  margin-top: 0;
+}
+
+/* Newsletter */
+.newsletter__subheading,
+.newsletter__privacy {
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.newsletter__privacy {
+  font-size: 1.2rem;
+  opacity: 0.7;
+  margin-top: 1.2rem;
+}
+
+/* Footer */
+.footer__list-social .list-social__link:hover .icon {
+  color: rgb(var(--color-gold));
+}
+
+.footer__tagline {
+  font-family: var(--font-heading-family);
+  font-style: italic;
+  font-size: 1.8rem;
+  opacity: 0.85;
+}
+
+/* Product page */
+.product__eyebrow {
+  color: rgb(var(--color-gold));
+  margin: 0 0 0.6rem;
+}
+
+.product__benefits ul {
+  list-style: none;
+  padding: 0;
+  margin: 1.2rem 0 0;
+}
+
+.product__benefits li {
+  position: relative;
+  padding-left: 2.2rem;
+  margin-bottom: 0.6rem;
+}
+
+.product__benefits li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  border: 1px solid rgb(var(--color-gold));
+  background: radial-gradient(circle, rgb(var(--color-gold)) 0 30%, transparent 32%);
+}
+
+.product__commission {
+  margin: 1.6rem 0 0;
+  padding: 1.4rem 1.6rem;
+  border: 1px dashed rgba(var(--color-gold), 0.7);
+  border-radius: 8px;
+  font-size: 1.4rem;
+}
+
+.product__commission a {
+  color: rgb(var(--color-foreground));
+}
+
+.product .icon-with-text .svg-wrapper,
+.product .icon-with-text .icon-with-text__item .icon {
+  color: rgb(var(--color-gold));
+}
+
+/* Collection list: circular mandala cards */
+.collection-list--circle .card--collection .card__inner .media,
+.collection-list--circle .card--collection .card__media,
+.collection-list--circle .card--collection .card__inner {
+  border-radius: 50%;
+}
+
+.collection-list--circle .card--collection .card__inner .media img {
+  border-radius: 50%;
+}
+
+.collection-list--circle .card--collection {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.collection-list--circle .card--collection .card__content {
+  text-align: center;
+}
+
+/* Image with text: decorative double gold frame */
+.image-with-text--framed .image-with-text__media {
+  position: relative;
+  outline: 1px solid rgba(var(--color-gold), 0.8);
+  outline-offset: -1.2rem;
+  padding: 0;
+}
+
+.image-with-text--framed .image-with-text__media::after {
+  content: '';
+  position: absolute;
+  inset: 0.6rem;
+  border: 1px solid rgba(var(--color-gold), 0.5);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.image-with-text__text--caption.signature,
+.caption-with-letter-spacing.signature {
+  font-family: var(--font-heading-family);
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: 1.8rem;
+  color: rgb(var(--color-gold));
+}
+
+/* Cart drawer */
+.cart-drawer .drawer__inner {
+  border-left: 1px solid rgba(var(--color-gold), 0.3);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .header__menu-item span,
+  .card--card,
+  .card--standard .card__inner {
+    transition: none;
+  }
+}
+
+/* Multicolumn icon columns (trust-style) */
+.multicolumn-card__icon {
+  margin-bottom: 1.2rem;
+}
+
+.multicolumn-card__icon .svg-wrapper {
+  display: inline-flex;
+  width: 3.2rem;
+  height: 3.2rem;
+  color: rgb(var(--color-gold));
+}
+
+.multicolumn-card__icon .svg-wrapper svg {
+  width: 100%;
+  height: 100%;
+}
+
+.banner__eyebrow {
+  margin: 0 0 1rem;
+}
+
+.banner__box .ornament-divider {
+  margin-top: 0.4rem;
+  margin-bottom: 1.6rem;
+}
+
+/* Multicolumn icon columns (trust-style) */
+.multicolumn-card__icon {
+  margin-bottom: 1.2rem;
+}
+
+.multicolumn-card__icon .svg-wrapper {
+  display: inline-flex;
+  width: 3.2rem;
+  height: 3.2rem;
+  color: rgb(var(--color-gold));
+}
+
+.multicolumn-card__icon .svg-wrapper svg {
+  width: 100%;
+  height: 100%;
+}
+
+.banner__eyebrow {
+  margin: 0 0 1rem;
+}
+
+.banner__box .ornament-divider {
+  margin-top: 0.4rem;
+  margin-bottom: 1.6rem;
+}

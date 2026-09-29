@@ -26,6 +26,9 @@
 {%- style -%}
   #Banner-{{ section.id }}::after {
     opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
+    {%- if section.settings.overlay_style == 'gradient' %}
+    background: linear-gradient(180deg, rgba(43, 35, 64, 0.05) 0%, rgba(43, 35, 64, 0.95) 100%);
+    {%- endif %}
   }
 {%- endstyle -%}
 
@@ -116,9 +119,13 @@
     </div>
   {%- endif -%}
   <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
+    <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_watermark %} has-mandala-watermark{% endif %}">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
+          {%- when 'eyebrow' -%}
+            <p class="banner__eyebrow caption-with-letter-spacing eyebrow" {{ block.shopify_attributes }}>
+              {{ block.settings.text | escape }}
+            </p>
           {%- when 'heading' -%}
             <h2
               class="banner__heading inline-richtext {{ block.settings.heading_size }}"
@@ -126,6 +133,15 @@
             >
               {{ block.settings.heading }}
             </h2>
+            {%- if block.settings.show_ornament -%}
+              {%- liquid
+                assign ornament_align = 'left'
+                if section.settings.desktop_content_alignment == 'center'
+                  assign ornament_align = 'center'
+                endif
+              -%}
+              {% render 'ornament-divider', align: ornament_align %}
+            {%- endif -%}
           {%- when 'text' -%}
             <div class="banner__text rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
               <p>{{ block.settings.text }}</p>
@@ -194,6 +210,28 @@
       "unit": "%",
       "label": "t:sections.image-banner.settings.image_overlay_opacity.label",
       "default": 0
+    },
+    {
+      "type": "select",
+      "id": "overlay_style",
+      "options": [
+        {
+          "value": "flat",
+          "label": "t:sections.image-banner.settings.overlay_style.options__1.label"
+        },
+        {
+          "value": "gradient",
+          "label": "t:sections.image-banner.settings.overlay_style.options__2.label"
+        }
+      ],
+      "default": "flat",
+      "label": "t:sections.image-banner.settings.overlay_style.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_watermark",
+      "default": false,
+      "label": "t:sections.image-banner.settings.show_watermark.label"
     },
     {
       "type": "select",
@@ -362,10 +400,29 @@
   ],
   "blocks": [
     {
+      "type": "eyebrow",
+      "name": "t:sections.image-banner.blocks.eyebrow.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "t:sections.image-banner.blocks.eyebrow.settings.text.default",
+          "label": "t:sections.image-banner.blocks.eyebrow.settings.text.label"
+        }
+      ]
+    },
+    {
       "type": "heading",
       "name": "t:sections.image-banner.blocks.heading.name",
       "limit": 1,
       "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_ornament",
+          "default": false,
+          "label": "t:sections.image-banner.blocks.heading.settings.show_ornament.label"
+        },
         {
           "type": "inline_richtext",
           "id": "heading",

@@ -1,0 +1,28 @@
+.ornament-divider {
+  display: flex;
+  margin: 1.2rem 0 2rem;
+  color: rgb(var(--color-gold));
+  line-height: 0;
+}
+
+.ornament-divider--left {
+  justify-content: flex-start;
+}
+
+.ornament-divider--center {
+  display: flex;
+  justify-content: center;
+}
+
+.ornament-divider__svg {
+  display: block;
+  width: 12rem;
+  height: 1.4rem;
+  max-width: 100%;
+}
+
+@media screen and (min-width: 750px) {
+  .ornament-divider {
+    margin: 1.4rem 0 2.4rem;
+  }
+}

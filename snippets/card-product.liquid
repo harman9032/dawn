@@ -141,6 +141,10 @@
                 >
                   {{- 'products.product.on_sale' | t -}}
                 </span>
+              {%- elsif card_product.tags contains 'original' -%}
+                <span class="badge badge--bottom-left badge--tag">{{- 'products.product.badge_original' | t -}}</span>
+              {%- elsif card_product.tags contains 'limited' -%}
+                <span class="badge badge--bottom-left badge--tag">{{- 'products.product.badge_limited' | t -}}</span>
               {%- endif -%}
             </div>
           </div>
@@ -565,6 +569,10 @@
               >
                 {{- 'products.product.on_sale' | t -}}
               </span>
+            {%- elsif card_product.tags contains 'original' -%}
+              <span class="badge badge--bottom-left badge--tag">{{- 'products.product.badge_original' | t -}}</span>
+            {%- elsif card_product.tags contains 'limited' -%}
+              <span class="badge badge--bottom-left badge--tag">{{- 'products.product.badge_limited' | t -}}</span>
             {%- endif -%}
           </div>
         </div>

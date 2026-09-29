@@ -16,7 +16,7 @@
 {%- endstyle -%}
 
 <div class="newsletter center {% if section.settings.full_width == false %}newsletter--narrow page-width{% endif %}">
-  <div class="newsletter__wrapper color-{{ section.settings.color_scheme }} gradient content-container isolate{% if section.settings.full_width %} content-container--full-width{% endif %} section-{{ section.id }}-padding">
+  <div class="newsletter__wrapper color-{{ section.settings.color_scheme }} gradient content-container isolate{% if section.settings.full_width %} content-container--full-width{% endif %}{% if section.settings.show_watermark %} has-mandala-watermark{% endif %} section-{{ section.id }}-padding">
     {%- for block in section.blocks -%}
       {%- case block.type -%}
         {%- when '@app' -%}
@@ -115,7 +115,10 @@
               {%- endif -%}
             {% endform %}
           </div>
-      {%- endcase -%}
+          {%- if section.settings.privacy_text != blank -%}
+            <p class="newsletter__privacy">{{ section.settings.privacy_text | escape }}</p>
+          {%- endif -%}
+        {%- endcase -%}
     {%- endfor -%}
   </div>
 </div>
@@ -138,6 +141,17 @@
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
       "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "privacy_text",
+      "label": "t:sections.newsletter.settings.privacy_text.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_watermark",
+      "default": false,
+      "label": "t:sections.newsletter.settings.show_watermark.label"
     },
     {
       "type": "checkbox",
