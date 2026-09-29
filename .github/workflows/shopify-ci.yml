@@ -1,0 +1,35 @@
+name: Shopify Theme CI Pipeline
+
+on:
+  push:
+    branches: [ main, master, development ]
+  pull_request:
+    branches: [ main, master, development ]
+
+jobs:
+  theme-check:
+    name: Code Quality (Theme Check)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Shopify Theme Check
+        uses: shopify/theme-check-action@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  lighthouse-ci:
+    name: Performance Audit (Lighthouse)
+    runs-on: ubuntu-latest
+    # Wait for theme-check to pass first to save action runner minutes
+    needs: theme-check 
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Lighthouse CI
+        uses: shopify/lighthouse-ci-action@v1
+        with:
+          store: ${{ secrets.SHOPIFY_STORE_URL }}
+          password: ${{ secrets.SHOPIFY_THEME_PASSWORD }}
