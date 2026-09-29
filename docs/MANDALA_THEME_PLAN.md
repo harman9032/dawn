@@ -223,8 +223,18 @@ or plant for scale) as media #2.
 | 3 — Home template | Rebuild `templates/index.json` in the order above with placeholder copy; header/footer group settings | `templates/index.json`, `sections/header-group.json`, `sections/footer-group.json` |
 | 4 — Product page | Block order, tabs, inventory, icon-with-text, size-guide popup, sticky ATC, product template section order | `templates/product.json`, `sections/main-product.liquid`, `snippets/sticky-atc.liquid`, `assets/sticky-atc.js`, `snippets/price.liquid` |
 | 5 — Collection + cart | Collection grid settings, cart drawer upsell, badges | `templates/collection.json`, `sections/cart-drawer.liquid`, `snippets/card-product.liquid` |
-| 6 — QA | Theme Check, mobile pass, Lighthouse, placeholder content swap list for the store owner | — |
+| 6 — QA | Theme Check (runs in `.github/workflows/shopify-ci.yml` on every push to `main`), Lighthouse CI (same workflow, needs `SHOPIFY_STORE_URL` / `SHOPIFY_THEME_PASSWORD` secrets), mobile pass, placeholder content swap list for the store owner | `.github/workflows/shopify-ci.yml` |
 
 Inputs needed from the store owner before Phase 3: logo (SVG), hero image,
 artist portrait, process video, 3 reviews, Instagram handle, shipping/return
 policy figures, collection names.
+
+## 11. Repo notes
+
+- `AGENTS.md` describes a local checkout at Dawn 9.0.0 with a `snippets/shoplift.liquid`
+  customization. This repository is Dawn 16.0.0 and has no shoplift snippet, so
+  the plan targets 16.0.0 file names. If the live store still runs 9.0.0, the
+  section/snippet names above still apply but the shoplift snippet must be kept
+  when the two are reconciled.
+- Every push to `main` runs Theme Check; each phase should land only when Theme
+  Check is clean locally (`shopify theme check`).
